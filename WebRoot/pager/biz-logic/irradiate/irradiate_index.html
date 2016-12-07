@@ -1,0 +1,60 @@
+<#compress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>全国各地太阳能照辐量管理</title>
+<meta charset="UTF-8">
+<% include("/pager/common/quote.html"){} %>
+</head>
+<body>
+    <div class="body-center">
+        <div class="html-panel query-panel" id="query_con">
+            <div class="panel-header"><div class="panel-title">查询条件</div></div>
+            <div class="panel-content" id="menuMgrPanel">
+            	 <form onsubmit="return false;" id="queryForm" class="form_style">
+                		<span class="spacing">
+                			<label>省份：</label>
+                			<input id="province" name="province" class="easyui-combobox" data-options="
+								editable:true,
+								required:false,
+						        valueField:'province',
+						        textField:'province',
+						        data:${provinces}"
+						        style="width: 155px;">
+                		</span>
+                		<span class="spacing">
+                			<label>城市：</label>
+                			<input id="city" name="city" class="easyui-combobox" data-options="
+								editable:true,
+								required:false,
+						        valueField:'city',
+						        textField:'city',
+						        data:${cities}"
+						        style="width: 155px;">
+                		</span>
+		                <span class="spacing">
+		                	<input type="submit" id="queryButton" value="查询"/>
+		                </span>
+		                <span>
+		                	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		             	    <label>导入excel太阳能辐照量表：</label>
+		                	<input type="file" id="excelFile" name="excelFile">
+		                </span>
+                </form>
+            </div>
+        </div>
+        
+        <table id="grid" data-options="rownumbers:true,pagination:true,url:'irradiate/list'" title="辐照量列表">
+            <thead>
+            	<th data-options="field:'id',hidden:false,width:20,resizable:true,align:'left'">ID</th>
+                <th data-options="field:'province',width:80,resizable:true,align:'left'">省份</th>
+                <th data-options="field:'city',width:80,resizable:true,align:'left'">城市</th>
+                <th data-options="field:'latitude',width:80,resizable:true,align:'left'">纬度</th>
+                <th data-options="field:'mj',width:80,resizable:true,align:'left'">日辐照</th>
+            </thead>
+        </table>
+    </div>
+    
+</body>
+</html>
+</#compress>

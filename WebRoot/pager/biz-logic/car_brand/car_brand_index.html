@@ -1,0 +1,84 @@
+<#compress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>车型数据库管理</title>
+<meta charset="UTF-8">
+<% include("/pager/common/quote.html"){} %>
+</head>
+<body>
+    <div class="body-center">
+        <div class="html-panel query-panel" id="query_con">
+            <div class="panel-header"><div class="panel-title">查询条件</div></div>
+            <div class="panel-content" id="menuMgrPanel">
+            	 <form onsubmit="return false;" id="queryForm" class="form_style">
+                		<span class="spacing">
+                			<label>品牌名称：</label>
+                			<input type="text" name="name">
+                		</span>
+                		<span class="spacing">
+	                    	<label>厂商:</label>
+	                    	<input name="manf" class="easyui-combobox" data-options="
+							editable:true,
+							required:false,
+					        valueField:'id',
+					        textField:'name',
+					        data:${manfs}"
+					        style="width: 155px;">
+	                    </span>
+                		<span class="spacing">
+	                    	<label>热门:</label>
+	                    	<input name="hot" class="easyui-combobox" data-options="
+							editable:false,
+							required:false,
+					        valueField:'id',
+					        textField:'name',
+					        data:[{id:'',name:'全部'},{id:0,name:'否'},{id:1,name:'是'}]"
+					        style="width: 155px;">
+	                    </span>
+                		<span class="spacing">
+	                    	<label>状态:</label>
+	                    	<input name="status" class="easyui-combobox" data-options="
+							editable:false,
+							required:false,
+					        valueField:'id',
+					        textField:'name',
+					        data:[{id:'',name:'全部'},{id:0,name:'已启用'},{id:1,name:'已禁用'}]"
+					        style="width: 155px;">
+	                    </span>
+		                <span class="spacing">
+		                	<input type="submit" id="queryButton" value="查询"/>
+		                </span>
+                </form>
+            </div>
+        </div>
+        
+        <table id="grid"  data-options="rownumbers:true,pagination:true,url:'car_brand/list'" title="汽车品牌列表">
+            <thead>
+            	<th data-options="field:'id',hidden:true">ID</th>
+                <th data-options="field:'name',width:80,resizable:true,align:'left'">品牌名称</th>
+                <th data-options="field:'manf',width:80,resizable:true,align:'left'">厂商</th>
+                <th data-options="field:'p_id',width:80,resizable:true,align:'left',formatter:formatter.logo">logo</th>
+                <th data-options="field:'hot',width:80,resizable:true,align:'left',formatter:formatter.hot">是否热门</th>
+                <th data-options="field:'status',width:80,resizable:true,align:'left',formatter:formatter.status">状态</th>
+                <th data-options="field:'up',width:80,resizable:true,align:'left',formatter:formatter.up">上传logo</th>
+            </thead>
+        </table>
+    </div>
+    
+    
+    <div class="hide-panel">
+        <div id="upDialog" style="width:300px;height:200px;" data-options="resizable:false,modal:true,closed: true">
+           	<label>上传图片<font color="red"></font></label>
+          	<input type="file" name="upFile" id="logo">
+        </div>
+        
+        <div id="imgShowDialog" style="width:350px;height:350px;" data-options="resizable:false,modal:true,closed: true">
+             <img alt="图片" style="width:330px;height:300px" id="imgUrl">
+        </div>
+        
+	</div>
+    
+</body>
+</html>
+</#compress>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup namespace="Irradiate">
+	
+	<!-- 动态SQL处理 -->
+	<sql id="pager">
+		<![CDATA[ 
+			from(
+				select id,province,city,latitude,mj from irradiate where 1=1
+				<% if(!isEmpty(province)){ %>
+				 AND province like #'%$province$%'#
+				<% } %>
+				<% if(!isEmpty(city)){ %>
+				 AND city like #'%$city$%'#
+				<% } %>
+			)t 
+		]]>
+	</sql>
+	
+</sqlGroup>

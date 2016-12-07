@@ -1,0 +1,24 @@
+<#compress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>微信登录在线用户列表</title>
+<meta charset="UTF-8">
+<% include("/pager/common/quote.html"){} %>
+</head>
+<body>
+    <div class="body-center">
+        <table id="grid" title="微信登录在线用户列表">
+            <thead>
+            	<th data-options="field:'id',width:80,resizable:true,align:'left'">id</th>
+                <th data-options="field:'openid',width:80,resizable:true,align:'left'">openID</th>
+                <th data-options="field:'name',width:80,resizable:true,align:'left'">微信昵称</th>
+                <th data-options="field:'phone',width:120,resizable:true,align:'left'">手机号码</th>
+                <th data-options="field:'reg_time',width:80,resizable:true,align:'left'">账号创建时间</th>
+                <th data-options="field:'login_time',width:80,resizable:true,align:'left'">登录时间</th>
+            </thead>
+        </table>
+    </div>
+</body>
+</html>
+</#compress>

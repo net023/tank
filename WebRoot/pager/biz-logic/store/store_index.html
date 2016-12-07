@@ -1,0 +1,192 @@
+<#compress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>门店管理</title>
+<meta charset="UTF-8">
+<% include("/pager/common/quote.html"){} %>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=EBee53c88a82e5213476c7d9961396bc"></script>
+</head>
+<body>
+    <div class="body-center">
+        <div class="html-panel query-panel" id="query_con">
+            <div class="panel-header"><div class="panel-title">查询条件</div></div>
+            <div class="panel-content" id="menuMgrPanel">
+                <form onsubmit="return false;" id="queryForm" class="form_style">
+                		<span class="spacing">
+                			<label>门店名称：</label>
+                			<input type="text" name="storeName">
+                		</span>
+                    <span class="spacing"><input type="submit" id="queryButton" value="查询"/></span>
+                    <span class="spacing"><input type="submit" id="lookAllPoint" value="门店分布"/></span>
+                </form>
+            </div>
+        </div>
+        
+        <table id="grid"  data-options="rownumbers:true,pagination:true,url:'store/list'" title="门店列表">
+            <thead>
+            	<th data-options="field:'id',hidden:true">ID</th>
+                <th data-options="field:'name',width:80,resizable:true,align:'left'">门店名称</th>
+                <th data-options="field:'username',width:80,resizable:true,align:'left'">门店登录用户名</th>
+                <th data-options="field:'contact',width:80,resizable:true,align:'left'">联系人</th>
+                <th data-options="field:'phone',width:80,resizable:true,align:'left'">电话</th>
+            	<th data-options="field:'info',hidden:true">info</th>
+            	<th data-options="field:'lon',width:80,resizable:true,align:'left'">经度</th>
+            	<th data-options="field:'lat',width:80,resizable:true,align:'left'">纬度</th>
+            	<th data-options="field:'province',width:80,resizable:true,align:'left'">province</th>
+            	<th data-options="field:'city',width:80,resizable:true,align:'left'">city</th>
+            	<th data-options="field:'county',width:80,resizable:true,align:'left'">county</th>
+            	<th data-options="field:'address',width:80,resizable:true,align:'left'">address</th>
+            	<th data-options="field:'fs',hidden:true">fs</th>
+            	<th data-options="field:'ms',hidden:true">ms</th>
+            	<th data-options="field:'qfc',width:80,resizable:true,align:'left'">资质</th>
+            	<th data-options="field:'bill',width:80,resizable:true,align:'left',formatter:formatter.bill">开票类型</th>
+            	<th data-options="field:'license',width:80,resizable:true,align:'left',formatter:formatter.license">是否有营业执照</th>
+                <th data-options="field:'c_time',width:80,resizable:true,align:'left',hidden:true">创建时间</th>
+                <th data-options="field:'back',width:160,resizable:true,align:'left',formatter:formatter.back">修改后台登录账户</th>
+                <th data-options="field:'status',width:160,resizable:true,align:'left',formatter:formatter.status">状态</th>
+                <th data-options="field:'opt',width:80,resizable:true,align:'center',formatter:formatter.opt">操作</th>
+            </thead>
+        </table>
+    </div>
+    
+    <div class="hide-panel">
+    	<div id="mapDialog" style="width:800px;height:600px;padding-left: 30px;" data-options="resizable:false,modal:false,closed:true">
+    		<div id="l-map" style="width: 700px;height: 542px;"></div>
+	    	<div id="r-result">请输入:<input type="text" id="suggestId" size="20" value="百度" style="width:400px;" /></div>
+			<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:400px;height:auto; display:none;z-index: 888"></div>
+    	</div>
+    </div>
+    
+    
+    <div class="hide-panel">
+    	<div id="mapDialog2" style="width:1000px;height:750px;padding-left: 30px;" data-options="resizable:false,modal:true,closed:true">
+    	</div>
+    </div>
+    
+    <div class="hide-panel">
+    	<div id="backUserDialog" style="width:350px;height:180px;padding-left:30px;" data-options="resizable:false,modal:true,closed: true">
+    		<form id="backUserForm" class="form-style" method="post" onsubmit="return false;">
+    			<input type="hidden" name="id">
+	    		<div class="form-field">
+	    			<label for="username">用户名:<font color="red">*</font></label>
+	    			<input class="easyui-validatebox" type="text" name="username" id="username" data-options="required:true">
+	    		</div>
+	    		<div class="form-field">
+	    			<label for="password">密码:<font color="red">*</font></label>
+	    			<input class="easyui-validatebox" type="password" name="password" id="password" data-options="required:true">
+	    		</div>
+    		</form>
+    	</div>
+    </div>
+    
+    <div class="hide-panel">
+        <div id="editDialog" style="width:800px;height:600px;padding-left:30px;" data-options="resizable:false,modal:false,closed: true">
+            <form id="editForm" class="form_style" method="post" onsubmit="return false;">
+                <input type="hidden" name="id" id="id" />
+                <input type="hidden" name="fs" id="fs"/>
+                <div class="form-field">
+                    <label for="edit_version">门店名称：<font color="red">*</font></label>
+                    <input class="easyui-validatebox" type="text" name="name" data-options="required:true" />
+                </div>
+                <div class="form-field">
+                    <label for="edit_version">门店登录用户名：<font color="red">*</font></label>
+                    <input class="easyui-validatebox" type="text" name="username" data-options="required:true" />
+                </div>
+                <div class="form-field">
+                    <label for="lon">经度：<font color="red">*</font></label>
+                    <input class="easyui-validatebox" type="text" name="lon" id="lon" data-options="required:true" />
+                </div>
+                <div class="form-field">
+                    <label for="lat">纬度：<font color="red">*</font></label>
+                    <input class="easyui-validatebox" type="text" name="lat" id="lat" data-options="required:true" />
+                </div>
+                <div class="form-field">
+                    <label for="current">门店地址：<font color="red">*</font></label>
+                    <!-- <input class="easyui-validatebox" type="text" name="province" id="province" data-options="required:true" placeholder="省份"/> -->
+                    <input id="province" name="province" class="easyui-combobox" data-options="
+						editable:true,
+						required:false,
+				        valueField:'id',
+				        textField:'name',
+				        data:${provinces}"
+				        style="width: 155px;">
+                    <!-- <input class="easyui-validatebox" type="text" name="city" id="city" data-options="required:true" placeholder="地级市"/> -->
+                    <input id="city" name="city" class="easyui-combobox" data-options="
+						editable:true,
+						required:false,
+				        valueField:'id',
+				        textField:'name',
+				        data:${cities}"
+				        style="width: 155px;">
+                   <!--  <input class="easyui-validatebox" type="text" name="county" id="county" data-options="required:true" placeholder="区县"/> -->
+                    <input id="county" name="county" class="easyui-combobox" data-options="
+						editable:true,
+						required:false,
+				        valueField:'id',
+				        textField:'name',
+				        data:${counties}"
+				        style="width: 155px;">
+                </div>
+                <div class="form-field">
+                	<label></label>
+                    <input class="easyui-validatebox" type="text" id="address" name="address" data-options="required:true" placeholder="除去省和区县外的详细地址" style="width:300px;"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="selectOnMap" value="在地图上选">
+                </div>
+                <div class="form-field">
+                	<label>门店照片：<font color="red">*</font></label>
+                	<input type="file" name="upFile" id="storePic">
+                	<table>
+                		<thead style="color: red;"><font color="red">注：JPG格式，380*230尺寸</font></thead>
+                		<tr id="picNode">
+                			<!-- <td><img alt="" src="http://img3.imgtn.bdimg.com/it/u=86063938,1601291579&fm=21&gp=0.jpg" style="width:80px;height:80px;"></td> -->
+                		</tr>
+                	</table>
+                </div>
+                <div class="form-field">
+                    <label>保养服务：<font color="red">*</font></label>
+                    <%for(mtSer in allMtSers) {%>
+                    	<input type="checkbox" name="ms" value="${mtSer.id}" id="ms_${mtSer.id}">${mtSer.name}
+                   	<%}%>
+                </div>
+                <div class="form-field">
+                    <label>联系人：<font color="red">*</font></label>
+                    <input type="text" name="contact">
+                </div>
+                <div class="form-field">
+                    <label>电话：<font color="red">*</font></label>
+                    <input type="text" name="phone">
+                </div>
+                <div class="form-field">
+                    <label>资质：<font color="red">*</font></label>
+                    <select name="qfc">
+                    	<option value="1">一类</option>
+                    	<option value="2">二类</option>
+                    	<option value="3">三类</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label>是否有营业执照：<font color="red">*</font></label>
+                    <select name="license">
+                    	<option value="0">有</option>
+                    	<option value="1">没有</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label>开票类型：<font color="red">*</font></label>
+                    <select name="bill">
+                    	<option value="0">收据</option>
+                    	<option value="1">普票</option>
+                    	<option value="1">增票</option>
+                    </select>
+                </div>
+                 <div class="form-field">
+                    <label for="status">门店介绍：</label>
+                    <textarea class="easyui-validatebox" type="text" name="info" maxlength="500"  style="width:700px;height:100px;resize:none;"></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+</#compress>

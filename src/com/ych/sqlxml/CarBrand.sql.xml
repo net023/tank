@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup namespace="CarBrand">
+	
+	<!-- 动态SQL处理 -->
+	<sql id="pager">
+		<![CDATA[ 
+				from(
+					select t1.*,t2.`name` manf from (
+						select id,`name`,m_id,`status`,hot,p_id from car_brand where 1=1
+						<% if(!isEmpty(name)){ %>
+						 AND name like #'%$name$%'#
+						<% } %>
+						<% if(!isEmpty(manf)){ %>
+						 AND m_id = #$manf$#
+						<% } %>
+						<% if(!isEmpty(status)){ %>
+						 AND status = #$status$#
+						<% } %>
+						<% if(!isEmpty(hot)){ %>
+						 AND hot = #$hot$#
+						<% } %>
+					)t1
+					left join car_manf t2 on t2.id = t1.m_id
+				)t
+		]]>
+	</sql>
+	
+</sqlGroup>

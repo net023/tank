@@ -1,0 +1,57 @@
+<#compress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>pdf文件管理</title>
+<meta charset="UTF-8">
+<% include("/pager/common/quote.html"){} %>
+</head>
+<body>
+    <div class="body-center">
+        <div class="html-panel query-panel" id="query_con">
+            <div class="panel-header"><div class="panel-title">查询条件</div></div>
+            <div class="panel-content" id="menuMgrPanel">
+            	 <form onsubmit="return false;" id="queryForm" class="form_style">
+                		<span class="spacing">
+                			<label>文件名：</label>
+                			<input type="text" name="pdfName" >
+                		</span>
+		                <span class="spacing">
+		                	<input type="submit" id="queryButton" value="查询"/>
+		                </span>
+                </form>
+            </div>
+        </div>
+        
+        <table id="grid" data-options="rownumbers:true,pagination:true,url:'pdf/list'" title="pdf文件列表">
+            <thead>
+            	<th data-options="field:'id',hidden:false,width:20,resizable:true,align:'left'">ID</th>
+                <th data-options="field:'pdf_name',width:80,resizable:true,align:'left'">pdf文件名</th>
+                <!-- 修改  删除 查看 下载 -->
+                <th data-options="field:'price',width:20,resizable:true,align:'left',formatter:formatter.opt">操作</th>
+            </thead>
+        </table>
+    </div>
+    
+    <div class="hide-panel">
+    
+    	<div id="pdfDialog" style="width:510px;height:180px;padding-left:30px;" data-options="resizable:false,modal:true,closed: true">
+    			<form id="pdfEditForm" class="form_style" method="post" onsubmit="return false;">
+    				<input type="hidden" id="id" name="id"/>
+	    			<div class="form-field">
+		    			<label>pdf文件名</label>
+		    			<input type="text" name="pdf_name" id="pdf_name"/>
+	    			</div>
+	    			<div class="form-field">
+						<label>选择上传pdf</label>
+		    			<input id="pdfFile" name="pdfFile" type="file" style="width: 70px;">
+		    			<label id="si">未选择文件</label>
+	    			</div>
+    			</form>
+    	</div>
+    	
+    </div>
+    
+</body>
+</html>
+</#compress>
