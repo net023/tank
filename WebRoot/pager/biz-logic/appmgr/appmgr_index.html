@@ -1,0 +1,78 @@
+<#compress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>APP管理版本列表</title>
+<meta charset="UTF-8">
+<% include("/pager/common/quote.html"){} %>
+</head>
+<body>
+    <div class="body-center">
+        <table id="grid" data-options="rownumbers:true,pagination:true,url:'appmgr/list'"  title="APP管理版本列表">
+            <thead>
+            	<th data-options="field:'id',resizable:true,align:'left',hidden:true">ID</th>
+                <th data-options="field:'version',width:50,resizable:true,align:'left'">版本号</th>
+                <th data-options="field:'create_time',width:90,resizable:true,align:'left'">创建日期</th>
+                <th data-options="field:'order',width:90,resizable:true,align:'left'">order(值越大代表大版本)</th>
+                <th data-options="field:'update_info',width:120,resizable:true,align:'left',formatter:formatter.updateInfo">更新信息</th>
+                <th data-options="field:'apk_url',width:100,resizable:true,align:'left',formatter:formatter.apk">apk下载地址</th>
+                <th data-options="field:'ipa_url',width:100,resizable:true,align:'left',formatter:formatter.ipa">ipa下载地址</th>
+                <th data-options="field:'status',width:50,resizable:true,align:'left',formatter:formatter.status">状态</th>
+                <th data-options="field:'opt',width:80,resizable:true,align:'left',formatter:formatter.opt">操作</th>
+            </thead>
+        </table>
+    </div>
+    
+    <div class="hide-panel">
+    	<div id="appDialog" style="width:550px;height:500px;padding-left:30px;" data-options="resizable:false,modal:true,closed: true">
+    			<form id="appEditForm" action="appmgr/add" class="form_style" method="post" onsubmit="return false;">
+    				<input type="hidden" id="id" name="id"/>
+	    			<div class="form-field">
+		    			<label>版本号:</label>
+		    			<input type="text" name="version" id="version"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>order值:</label>
+		    			<input type="text" name="order" id="order"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>创建日期:</label>
+		    			<input id="create_time" name="create_time" style="width:150px;"
+							onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});" class="Wdate"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>apk下载地址:</label>
+		    			<input style="width:400px;resize:none;" type="text" name="apk_url" id="apk_url"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>ipa下载地址:</label>
+		    			<input style="width:400px;resize:none;" type="text" name="ipa_url" id="ipa_url"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>更新信息:</label>
+		    			<textarea style="width:400px;height:100px;resize:none;" id="update_info" name="update_info"></textarea>
+	    			</div>
+    			</form>
+    	</div>
+    	
+    	<div id="infoDialog" style="width:550px;height:350px;" data-options="resizable:false,modal:true,closed:true">
+             <fieldset>
+            	<legend>App版本信息</legend>
+            	<label style="display: block;">版本号:</label>
+             	<label id="info_version" style="background-color:yellow;"></label>
+            	<label style="display: block;">order值:</label>
+            	<label id="info_order" style="background-color:yellow;"></label>
+            	<label style="display: block;">创建日期:</label>
+            	<label id="info_create_time" style="background-color:yellow;"></label>
+            	<label style="display: block;">apk下载地址:</label>
+            	<label id="info_apk_url" style="background-color:yellow;"></label>
+            	<label style="display: block;">ipa下载地址:</label>
+            	<label id="info_ipa_url" style="background-color:yellow;"></label>
+            	<label style="display: block;">更新信息:</label>
+             	<textarea id="info_update_info" style="width:400px;height:100px;resize:none;" disabled="disabled"></textarea>
+            </fieldset>
+        </div>
+    </div>
+</body>
+</html>
+</#compress>

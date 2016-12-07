@@ -6,18 +6,22 @@ import java.util.Date;
 import javax.servlet.http.HttpSession;
 
 import com.jfinal.aop.Before;
-import com.jfinal.core.Controller;
 import com.jfinal.log.Logger;
+import com.jfinal.plugin.activerecord.Page;
+import com.ych.base.common.BaseController;
+import com.ych.base.common.Pager;
 import com.ych.core.plugin.annotation.Control;
 import com.ych.web.interceptor.ResponseInterceptor;
 import com.ych.web.listenner.SessionListenner;
+import com.ych.web.model.AppMgrModel;
+import com.ych.web.model.IrradiateModel;
 import com.ych.web.model.Result;
 import com.ych.web.model.WXUserModel;
 import com.ych.web.validator.WtValidator;
 
 @Control(controllerKey = "/jk")
 @Before({ResponseInterceptor.class,WtValidator.class})
-public class WaterTankController extends Controller{
+public class WaterTankController extends BaseController{
 	private static final Logger LOG = Logger.getLogger(WaterTankController.class);
 	
 	/**
@@ -27,7 +31,7 @@ public class WaterTankController extends Controller{
 	 * 得到用户的openid
 	 */
 //	@Before({WtValidator.class})
-	public void login(){
+	public void wxLogin(){
 		Result rj = new Result(0);
 		String openid = getPara("openid");
 		try {
@@ -54,6 +58,39 @@ public class WaterTankController extends Controller{
 			rj.setCode(1);
 		} catch (Exception e) {
 			LOG.error("WaterTankController->login[微信登录失败]", e);
+		}
+		renderJson(rj);
+	}
+	
+	
+	//获取太阳辐射量
+	public void getIrradiatePageList(){
+		Result rj = new Result(0);
+		try {
+			Pager pager = createPager();
+			Page<IrradiateModel> page = IrradiateModel.dao.getPager(pager);
+			rj.setData(page);
+			rj.setCode(1);
+		} catch (Exception e) {
+			LOG.error("WaterTankController->getIrradiatePageList[获取太阳辐射量失败]", e);
+		}
+		renderJson(rj);
+	}
+	
+	
+	//app版本检查更新
+	public void checkAppVersion(){
+		Result rj = new Result(0);
+		try {
+			Integer order = getParaToInt("order");
+			String version = getPara("version");
+			AppMgrModel model = AppMgrModel.dao.checkAppVersion(order,version);
+			if(model!=null){
+				rj.setData(model);
+			}
+			rj.setCode(1);
+		} catch (Exception e) {
+			LOG.error("WaterTankController->checkAppVersion[检查app版本失败]", e);
 		}
 		renderJson(rj);
 	}

@@ -9,7 +9,7 @@ public class WtValidator extends Validator {
 	protected void validate(Controller c) {
 		String sp = c.getRequest().getServletPath();
 		switch (sp) {
-			case "/jk/login":
+			case "/jk/wxLogin":
 				validateRequiredString("openid", "openid", "openid参数必须");
 				break;
 			case "/jk/smc":

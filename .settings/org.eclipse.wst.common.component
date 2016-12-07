@@ -2,6 +2,7 @@
     <wb-module deploy-name="ych">
         <wb-resource deploy-path="/" source-path="/WebRoot" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/doc"/>
         <property name="java-output-path" value="/ych/build/classes"/>
         <property name="context-root" value="ych"/>
     </wb-module>
