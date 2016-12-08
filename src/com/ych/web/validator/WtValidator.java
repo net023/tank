@@ -12,6 +12,14 @@ public class WtValidator extends Validator {
 			case "/jk/wxLogin":
 				validateRequiredString("openid", "openid", "openid参数必须");
 				break;
+			case "/jk/checkAppVersion":
+				validateRequiredString("version", "version", "version参数必须");
+				validateInteger("order", 0, Integer.MAX_VALUE, "order", "order不正确");
+				break;
+			case "/jk/getIrradiatePageList":
+				validateInteger("page", 1, Integer.MAX_VALUE, "page", "页码不正确");
+				validateInteger("rows", 1, Integer.MAX_VALUE, "rows", "分页大小不正确");
+				break;
 			case "/jk/smc":
 				validateRequiredString("p", "p", "手机号码参数必须");
 				break;
@@ -60,7 +68,7 @@ public class WtValidator extends Validator {
 
 	@Override
 	protected void handleError(Controller c) {
-		addError("r", "false");
+		c.setAttr("code", 120);
 		c.renderJson();
 	}
 }

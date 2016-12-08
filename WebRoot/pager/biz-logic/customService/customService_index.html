@@ -1,0 +1,38 @@
+<#compress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>客服电话列表</title>
+<meta charset="UTF-8">
+<% include("/pager/common/quote.html"){} %>
+</head>
+<body>
+    <div class="body-center">
+        <table id="grid" data-options="rownumbers:true,pagination:true,url:'customService/list'"  title="客服电话列表">
+            <thead>
+            	<th data-options="field:'id',resizable:true,align:'left',hidden:true">ID</th>
+                <th data-options="field:'name',width:50,resizable:true,align:'left'">名称</th>
+                <th data-options="field:'telephone',width:90,resizable:true,align:'left'">电话</th>
+                <th data-options="field:'opt',width:80,resizable:true,align:'left',formatter:formatter.opt">操作</th>
+            </thead>
+        </table>
+    </div>
+    
+    <div class="hide-panel">
+    	<div id="customDialog" style="width:400px;height:200px;padding-left:30px;" data-options="resizable:false,modal:true,closed: true">
+    			<form id="customEditForm" action="customService/add" class="form_style" method="post" onsubmit="return false;">
+    				<input type="hidden" id="id" name="id"/>
+	    			<div class="form-field">
+		    			<label>名称:</label>
+		    			<input type="text" name="name" id="name"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>电话:</label>
+		    			<input type="text" name="telephone" id="telephone"/>
+	    			</div>
+    			</form>
+    	</div>
+    </div>
+</body>
+</html>
+</#compress>

@@ -38,7 +38,7 @@ $(function() {
 		}
 	});*/
 	
-	
+	var ii;
 	$("#pdfFile").fileupload({
 		url:'pdf/add',
 		dataType:'json',
@@ -49,6 +49,7 @@ $(function() {
 		add:function(e,data){
 			$("#si").text("已经选择文件:"+data.files[0].name);
 			$("#saveb").click(function(){
+				ii = layer.load();
 				data.formData = {id:$("#id").val(),pdfName:$("#pdf_name").val()};
 				data.submit();
 			}); 
@@ -58,6 +59,7 @@ $(function() {
 			fileUp = true;
 		},
 		done:function(e,result){
+			layer.close(ii);
 			if(result.result.r){
 				$('#pdfDialog').dialog('close');
 //				$("#grid").datagrid('reload');
@@ -68,6 +70,7 @@ $(function() {
 			}
 		},
 		fail:function(){
+			layer.close(ii);
 			$.messager.alert("错误提示","系统异常请联系管理员。");
 		}
 	});

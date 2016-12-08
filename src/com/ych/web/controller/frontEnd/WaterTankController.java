@@ -14,6 +14,7 @@ import com.ych.core.plugin.annotation.Control;
 import com.ych.web.interceptor.ResponseInterceptor;
 import com.ych.web.listenner.SessionListenner;
 import com.ych.web.model.AppMgrModel;
+import com.ych.web.model.CustomServiceModel;
 import com.ych.web.model.IrradiateModel;
 import com.ych.web.model.Result;
 import com.ych.web.model.WXUserModel;
@@ -91,6 +92,18 @@ public class WaterTankController extends BaseController{
 			rj.setCode(1);
 		} catch (Exception e) {
 			LOG.error("WaterTankController->checkAppVersion[检查app版本失败]", e);
+		}
+		renderJson(rj);
+	}
+	
+	//查看客服电话号码
+	public void getCustomServiceTelePhone(){
+		Result rj = new Result(0);
+		try {
+			rj.setData(CustomServiceModel.dao.find("select * from custom_service"));
+			rj.setCode(1);
+		} catch (Exception e) {
+			LOG.error("WaterTankController->getCustomServiceTelePhone[获取客服电话失败]", e);
 		}
 		renderJson(rj);
 	}

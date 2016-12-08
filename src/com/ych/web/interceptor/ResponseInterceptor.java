@@ -1,7 +1,5 @@
 package com.ych.web.interceptor;
 
-import java.io.IOException;
-
 import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
 import com.ych.web.listenner.SessionListenner;
@@ -21,7 +19,7 @@ public class ResponseInterceptor implements Interceptor {
 		if(!"/jk/wxLogin".equals(actionKey)){
 			Object user = arg.getController().getSession().getAttribute(SessionListenner.SESSION_USER_KEY);
 			if(null==user){
-				arg.getController().renderJson("sys", 110);
+				arg.getController().renderJson("code", 110);
 				return;
 			}
 		}
