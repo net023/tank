@@ -1,9 +1,14 @@
 package com.ych.web.controller.frontEnd;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.io.FileUtils;
 
 import com.jfinal.aop.Before;
 import com.jfinal.log.Logger;
@@ -16,6 +21,7 @@ import com.ych.web.listenner.SessionListenner;
 import com.ych.web.model.AppMgrModel;
 import com.ych.web.model.CustomServiceModel;
 import com.ych.web.model.IrradiateModel;
+import com.ych.web.model.PdfModel;
 import com.ych.web.model.Result;
 import com.ych.web.model.WXUserModel;
 import com.ych.web.validator.WtValidator;
@@ -108,4 +114,36 @@ public class WaterTankController extends BaseController{
 		renderJson(rj);
 	}
 	
+	
+	//下载pdf文件
+	public void downloadPdf(){
+		try {
+			Integer id = getParaToInt("id");
+			PdfModel pdfModel = PdfModel.dao.findById(id);
+			File tempFile = File.createTempFile(pdfModel.getStr("pdf_name"), ".pdf");
+			FileUtils.writeByteArrayToFile(tempFile, pdfModel.getBytes("pdf_res"));
+			renderFile(tempFile);
+		} catch (Exception e) {
+		}
+	}
+	
+	
+	//pdf查询
+	public void list(){
+		Pager pager = createPager();
+		if (getPara("pdfName") != null && !"".equals(getPara("pdfName"))) {
+			pager.addParam("pdfName", getPara("pdfName"));
+		}
+		Page<?> page = PdfModel.dao.getPager(pager);
+		setAttr("total", page.getTotalRow());
+		setAttr("rows", page.getList());
+		renderJson();
+	}
+	
+	
+	public static void main(String[] args) {
+		Map<String, String> ss = new HashMap<String, String>();
+		String put = ss.put("aa", "bbb");
+		System.out.println(put);
+	}
 }
