@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup namespace="CompanyProfileModel">
+	
+	<!-- 动态SQL处理 -->
+	<sql id="pager">
+		<![CDATA[ 
+			from(
+				select * from company_profile where 1=1
+			)t 
+		]]>
+	</sql>
+	
+</sqlGroup>

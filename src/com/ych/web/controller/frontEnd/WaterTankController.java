@@ -19,6 +19,7 @@ import com.ych.core.plugin.annotation.Control;
 import com.ych.web.interceptor.ResponseInterceptor;
 import com.ych.web.listenner.SessionListenner;
 import com.ych.web.model.AppMgrModel;
+import com.ych.web.model.CompanyProfileModel;
 import com.ych.web.model.CustomServiceModel;
 import com.ych.web.model.IrradiateModel;
 import com.ych.web.model.PdfModel;
@@ -124,20 +125,54 @@ public class WaterTankController extends BaseController{
 			FileUtils.writeByteArrayToFile(tempFile, pdfModel.getBytes("pdf_res"));
 			renderFile(tempFile);
 		} catch (Exception e) {
+			LOG.error("WaterTankController->downloadPdf[下载pdf文件失败]", e);
 		}
 	}
 	
 	
 	//pdf查询
-	public void list(){
-		Pager pager = createPager();
-		if (getPara("pdfName") != null && !"".equals(getPara("pdfName"))) {
-			pager.addParam("pdfName", getPara("pdfName"));
+	public void getPdfList(){
+		Result rj = new Result(0);
+		try {
+			Pager pager = createPager();
+			if (getPara("pdfName") != null && !"".equals(getPara("pdfName"))) {
+				pager.addParam("pdfName", getPara("pdfName"));
+			}
+			Page<?> page = PdfModel.dao.getPager2(pager);
+			rj.setData(page);
+			rj.setCode(1);
+		} catch (Exception e) {
+			LOG.error("WaterTankController->getPdfList[pdf查询失败]", e);
 		}
-		Page<?> page = PdfModel.dao.getPager(pager);
-		setAttr("total", page.getTotalRow());
-		setAttr("rows", page.getList());
-		renderJson();
+		renderJson(rj);
+	}
+	
+	
+	//获取企业官网
+	public void getCompanyUrl(){
+		Result rj = new Result(0);
+		try {
+			CompanyProfileModel companyProfileModel = CompanyProfileModel.dao.findFirst("select * from company_profile");
+			rj.setCode(1);
+			rj.setData(companyProfileModel.getStr("url"));
+		} catch (Exception e) {
+			LOG.error("WaterTankController->getCompanyUrl[获取企业官网失败]", e);
+		}
+		renderJson(rj);
+	}
+	
+	
+	//获取企业简介
+	public void getCompanyInfo(){
+		Result rj = new Result(0);
+		try {
+			CompanyProfileModel companyProfileModel = CompanyProfileModel.dao.findFirst("select * from company_profile");
+			rj.setCode(1);
+			rj.setData(companyProfileModel);
+		} catch (Exception e) {
+			LOG.error("WaterTankController->getCompanyInfo[获取企业简介失败]", e);
+		}
+		renderJson(rj);
 	}
 	
 	
