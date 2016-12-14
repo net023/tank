@@ -1,0 +1,74 @@
+<#compress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>项目列表</title>
+<meta charset="UTF-8">
+<% include("/pager/common/quote.html"){} %>
+</head>
+<body>
+    <div class="body-center">
+        <table id="grid" data-options="rownumbers:true,pagination:true,url:'project/list'"  title="项目列表">
+            <thead>
+            	<th data-options="field:'id',resizable:true,align:'left',hidden:true">ID</th>
+                <th data-options="field:'userId',width:90,resizable:true,align:'left'">用户ID</th>
+                <th data-options="field:'province',width:90,resizable:true,align:'left'">省份</th>
+                <th data-options="field:'city',width:90,resizable:true,align:'left'">城市</th>
+                <th data-options="field:'projectName',width:90,resizable:true,align:'left'">项目名称</th>
+                <th data-options="field:'codeId',width:90,resizable:true,align:'left'">编码ID</th>
+                <th data-options="field:'accessTag',width:90,resizable:true,align:'left'">访问标识</th>
+                <th data-options="field:'siteCArdNumber',width:90,resizable:true,align:'left'">站点卡号</th>
+                <th data-options="field:'tankType',width:90,resizable:true,align:'left',formatter:formatter.tankType">水箱控制</th>
+                <th data-options="field:'opt',width:80,resizable:true,align:'left',formatter:formatter.opt">操作</th>
+            </thead>
+        </table>
+    </div>
+    
+    <div class="hide-panel">
+    	<div id="ProjectDialog" style="width:400px;height:400px;padding-left:30px;" data-options="resizable:false,modal:true,closed: true">
+    			<form id="ProjectEditForm" action="project/add" class="form_style" method="post" onsubmit="return false;">
+    				<input type="hidden" id="id" name="id"/>
+	    			<div class="form-field">
+		    			<label>用户ID:</label>
+		    			<input type="text" name="userId" id="userId"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>省份:</label>
+		    			<input type="text" name="province" id="province"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>城市:</label>
+		    			<input type="text" name="city" id="city"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>项目名称:</label>
+		    			<input type="text" name="projectName" id="projectName"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>编码ID:</label>
+		    			<input type="text" name="codeId" id="codeId"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>访问标识:</label>
+		    			<input type="text" name="accessTag" id="accessTag"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>站点卡号:</label>
+		    			<input type="text" name="siteCArdNumber" id="siteCArdNumber"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>水箱控制:</label>
+		    			<input id="status" name="tankType" class="easyui-combobox" data-options="
+								editable:false,
+								required:false,
+						        valueField:'id',
+						        textField:'name',
+						        data:[{id:0,name:'单水箱'},{id:1,name:'双水箱'}]"
+						        style="width: 155px;">
+	    			</div>
+    			</form>
+    	</div>
+    </div>
+</body>
+</html>
+</#compress>

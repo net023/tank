@@ -211,3 +211,21 @@ CREATE TABLE `wxuser` (
   `login_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for project
+-- ----------------------------
+DROP TABLE IF EXISTS `project`;
+CREATE TABLE `project` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) DEFAULT NULL,
+  `province` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `projectName` varchar(100) DEFAULT NULL,
+  `codeId` varchar(100) DEFAULT NULL,
+  `accessTag` varchar(100) DEFAULT NULL,
+  `siteCArdNumber` varchar(100) DEFAULT NULL,
+  `tankType` smallint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+

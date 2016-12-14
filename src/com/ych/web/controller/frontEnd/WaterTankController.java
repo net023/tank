@@ -23,6 +23,7 @@ import com.ych.web.model.CompanyProfileModel;
 import com.ych.web.model.CustomServiceModel;
 import com.ych.web.model.IrradiateModel;
 import com.ych.web.model.PdfModel;
+import com.ych.web.model.ProjectModel;
 import com.ych.web.model.Result;
 import com.ych.web.model.WXUserModel;
 import com.ych.web.validator.WtValidator;
@@ -171,6 +172,36 @@ public class WaterTankController extends BaseController{
 			rj.setData(companyProfileModel);
 		} catch (Exception e) {
 			LOG.error("WaterTankController->getCompanyInfo[获取企业简介失败]", e);
+		}
+		renderJson(rj);
+	}
+	
+	
+	//添加项目
+	public void addProject(){
+		Result rj = new Result(0);
+		try {
+			ProjectModel projectModel = getModelWithOutModelName(ProjectModel.class, true);
+			if(null!=projectModel){
+				projectModel.save();
+			}
+			rj.setCode(1);
+		} catch (Exception e) {
+			LOG.error("WaterTankController->addProject[添加项目失败]", e);
+		}
+		renderJson(rj);
+	}
+	
+	//查询项目列表
+	public void getProjctList(){
+		Result rj = new Result(0);
+		try {
+			Pager pager = createPager();
+			Page<?> page = ProjectModel.dao.getPager(pager);
+			rj.setData(page);
+			rj.setCode(1);
+		} catch (Exception e) {
+			LOG.error("WaterTankController->getProjctList[项目列表查询失败]", e);
 		}
 		renderJson(rj);
 	}
