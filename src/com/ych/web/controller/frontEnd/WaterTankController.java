@@ -24,6 +24,7 @@ import com.ych.web.model.CustomServiceModel;
 import com.ych.web.model.IrradiateModel;
 import com.ych.web.model.PdfModel;
 import com.ych.web.model.ProjectModel;
+import com.ych.web.model.RealTimeDataModel;
 import com.ych.web.model.Result;
 import com.ych.web.model.WXUserModel;
 import com.ych.web.validator.WtValidator;
@@ -192,6 +193,36 @@ public class WaterTankController extends BaseController{
 		renderJson(rj);
 	}
 	
+	//更新项目
+	public void updateProject(){
+		Result rj = new Result(0);
+		try {
+			ProjectModel projectModel = getModelWithOutModelName(ProjectModel.class, true);
+			if(null!=projectModel){
+				projectModel.update();
+			}
+			rj.setCode(1);
+		} catch (Exception e) {
+			LOG.error("WaterTankController->updateProject[更新项目失败]", e);
+		}
+		renderJson(rj);
+	}
+	
+	//删除项目
+	public void delProject(){
+		Result rj = new Result(0);
+		try {
+			Integer id = getParaToInt("id");
+			boolean deleteOK = ProjectModel.dao.deleteById(id);
+			if (deleteOK) {
+				rj.setCode(1);
+			}
+		} catch (Exception e) {
+			LOG.error("WaterTankController->delProject[删除项目失败]", e);
+		}
+		renderJson(rj);
+	}
+	
 	//查询项目列表
 	public void getProjctList(){
 		Result rj = new Result(0);
@@ -207,9 +238,47 @@ public class WaterTankController extends BaseController{
 	}
 	
 	
+	//添加or更新项目实时运行状态
+	public void updateProjectData(){
+		Result rj = new Result(0);
+		try {
+			String dataStr = getPara("dataStr");
+			if (null!=dataStr && !"".equals(dataStr)) {
+				String head = dataStr.substring(0, 3);
+				String id = dataStr.substring(4, 8);
+				String dateTime = dataStr.substring(9, 22);
+				String jobNumber = dataStr.substring(23, 27);
+				String temperatureSignal = dataStr.substring(28, 60);
+				String percentage = dataStr.substring(61, 66);
+				String ioState = dataStr.substring(67, 88);
+				String powerConsumption = dataStr.substring(89, 98);
+				String furehaoneng = dataStr.substring(99, 108);
+				String nengxiao = dataStr.substring(109, 118);
+				RealTimeDataModel model = new RealTimeDataModel();
+				model.set("head", head).set("id", id).set("dateTime", dateTime).set("jobNumber", jobNumber)
+					.set("temperatureSignal", temperatureSignal).set("percentage", percentage).set("ioState", ioState)
+					.set("powerConsumption", powerConsumption).set("furehaoneng", furehaoneng).set("nengxiao", nengxiao);
+				RealTimeDataModel dataModel = RealTimeDataModel.dao.findById(id);
+				if (null==dataModel) {
+					model.save();
+				}else{
+					model.update();
+				}
+				rj.setCode(1);
+			}
+		} catch (Exception e) {
+			LOG.error("WaterTankController->updateProjectData[更新项目实时运行状态失败]", e);
+		}
+		renderJson(rj);
+	}
+	
+	
 	public static void main(String[] args) {
 		Map<String, String> ss = new HashMap<String, String>();
 		String put = ss.put("aa", "bbb");
 		System.out.println(put);
+		
+		String str = "0123456";
+		System.out.println(str.substring(0,4));
 	}
 }
