@@ -16,11 +16,13 @@ public class ResponseInterceptor implements Interceptor {
 		
 		//获取session中是否存在 如果不存在user 就返回错误 让调用方去登录
 		String actionKey = arg.getActionKey();
-		if(!"/jk/wxLogin".equals(actionKey) || !"/jk/updateProjectData".equals(actionKey)){
-			Object user = arg.getController().getSession().getAttribute(SessionListenner.SESSION_USER_KEY);
-			if(null==user){
-				arg.getController().renderJson("code", 110);
-				return;
+		if(!"/jk/wxLogin".equals(actionKey)){
+			if(!"/jk/updateProjectData".equals(actionKey)){
+				Object user = arg.getController().getSession().getAttribute(SessionListenner.SESSION_USER_KEY);
+				if(null==user){
+					arg.getController().renderJson("code", 110);
+					return;
+				}
 			}
 		}
 		arg.invoke();

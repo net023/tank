@@ -13,6 +13,7 @@ import org.apache.commons.io.FileUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
 import com.ych.base.common.BaseController;
 import com.ych.base.common.Pager;
 import com.ych.core.plugin.annotation.Control;
@@ -243,17 +244,17 @@ public class WaterTankController extends BaseController{
 		Result rj = new Result(0);
 		try {
 			String dataStr = getPara("dataStr");
-			if (null!=dataStr && !"".equals(dataStr)) {
-				String head = dataStr.substring(0, 3);
-				String id = dataStr.substring(4, 8);
-				String dateTime = dataStr.substring(9, 22);
-				String jobNumber = dataStr.substring(23, 27);
-				String temperatureSignal = dataStr.substring(28, 60);
-				String percentage = dataStr.substring(61, 66);
-				String ioState = dataStr.substring(67, 88);
-				String powerConsumption = dataStr.substring(89, 98);
-				String furehaoneng = dataStr.substring(99, 108);
-				String nengxiao = dataStr.substring(109, 118);
+			if (null!=dataStr && !"".equals(dataStr) && dataStr.length() == 119) {
+				String head = dataStr.substring(0, 4);
+				String id = dataStr.substring(4, 9);
+				String dateTime = dataStr.substring(9, 23);
+				String jobNumber = dataStr.substring(23, 28);
+				String temperatureSignal = dataStr.substring(28, 61);
+				String percentage = dataStr.substring(61, 67);
+				String ioState = dataStr.substring(67, 89);
+				String powerConsumption = dataStr.substring(89, 99);
+				String furehaoneng = dataStr.substring(99, 109);
+				String nengxiao = dataStr.substring(109, 119);
 				RealTimeDataModel model = new RealTimeDataModel();
 				model.set("head", head).set("id", id).set("dateTime", dateTime).set("jobNumber", jobNumber)
 					.set("temperatureSignal", temperatureSignal).set("percentage", percentage).set("ioState", ioState)
@@ -273,6 +274,34 @@ public class WaterTankController extends BaseController{
 	}
 	
 	
+	//获取水箱界面数据  实时监测数据
+	public void getRealTimeData(){
+		Result rj = new Result(0);
+		try {
+			Integer pid = getParaToInt("pid");
+			Record record = RealTimeDataModel.dao.getRealTimeDataByProjectId(pid);
+			rj.setData(record);
+			rj.setCode(1);
+		} catch (Exception e) {
+			LOG.error("WaterTankController->getProjctList[获取水箱界面数据失败]", e);
+		}
+		renderJson(rj);
+	}
+	
+	//获取项目状况
+	public void getProjectInfo(){
+		Result rj = new Result(0);
+		try {
+			Integer pid = getParaToInt("pid");
+			ProjectModel projectModel = ProjectModel.dao.findById(pid);
+			rj.setData(projectModel);
+			rj.setCode(1);
+		} catch (Exception e) {
+			LOG.error("WaterTankController->getProjectInfo[获取项目状况失败]", e);
+		}
+		renderJson(rj);
+	}
+	
 	public static void main(String[] args) {
 		Map<String, String> ss = new HashMap<String, String>();
 		String put = ss.put("aa", "bbb");
@@ -280,5 +309,8 @@ public class WaterTankController extends BaseController{
 		
 		String str = "0123456";
 		System.out.println(str.substring(0,4));
+		
+		String str1 = "01031500220150403164101000000520590580581511510491511511510141001000000000000001110000000000000000000000000000000000000";
+		System.out.println(str1.length());
 	}
 }
