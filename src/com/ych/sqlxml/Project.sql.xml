@@ -5,7 +5,12 @@
 	<sql id="pager">
 		<![CDATA[ 
 			from(
-				select * from project where 1=1
+				select 
+					t1.*,
+					case when DATE_FORMAT(t2.dateTime,'%Y-%m-%d') = CURDATE() THEN '在线' ELSE '下线' END as 'state'				
+				from project t1 
+				left join realtimedata t2 on t2.id = t1.codeId
+				where 1=1
 			)t 
 		]]>
 	</sql>

@@ -17,21 +17,20 @@ import com.jfinal.plugin.activerecord.Record;
 import com.ych.base.common.BaseController;
 import com.ych.base.common.Pager;
 import com.ych.core.plugin.annotation.Control;
-import com.ych.web.interceptor.ResponseInterceptor;
 import com.ych.web.listenner.SessionListenner;
 import com.ych.web.model.AppMgrModel;
 import com.ych.web.model.CompanyProfileModel;
 import com.ych.web.model.CustomServiceModel;
 import com.ych.web.model.IrradiateModel;
 import com.ych.web.model.PdfModel;
-import com.ych.web.model.ProjectModel;
+import com.ych.web.model.UserProjectModel;
 import com.ych.web.model.RealTimeDataModel;
 import com.ych.web.model.Result;
 import com.ych.web.model.WXUserModel;
 import com.ych.web.validator.WtValidator;
 
 @Control(controllerKey = "/jk")
-@Before({ResponseInterceptor.class,WtValidator.class})
+@Before({WtValidator.class})
 public class WaterTankController extends BaseController{
 	private static final Logger LOG = Logger.getLogger(WaterTankController.class);
 	
@@ -183,7 +182,7 @@ public class WaterTankController extends BaseController{
 	public void addProject(){
 		Result rj = new Result(0);
 		try {
-			ProjectModel projectModel = getModelWithOutModelName(ProjectModel.class, true);
+			UserProjectModel projectModel = getModelWithOutModelName(UserProjectModel.class, true);
 			if(null!=projectModel){
 				projectModel.save();
 			}
@@ -198,7 +197,7 @@ public class WaterTankController extends BaseController{
 	public void updateProject(){
 		Result rj = new Result(0);
 		try {
-			ProjectModel projectModel = getModelWithOutModelName(ProjectModel.class, true);
+			UserProjectModel projectModel = getModelWithOutModelName(UserProjectModel.class, true);
 			if(null!=projectModel){
 				projectModel.update();
 			}
@@ -214,7 +213,7 @@ public class WaterTankController extends BaseController{
 		Result rj = new Result(0);
 		try {
 			Integer id = getParaToInt("id");
-			boolean deleteOK = ProjectModel.dao.deleteById(id);
+			boolean deleteOK = UserProjectModel.dao.deleteById(id);
 			if (deleteOK) {
 				rj.setCode(1);
 			}
@@ -229,7 +228,8 @@ public class WaterTankController extends BaseController{
 		Result rj = new Result(0);
 		try {
 			Pager pager = createPager();
-			Page<?> page = ProjectModel.dao.getPager(pager);
+			pager.addParam("userId", getParaToInt("userId"));
+			Page<?> page = UserProjectModel.dao.getPagerByUserId(pager);
 			rj.setData(page);
 			rj.setCode(1);
 		} catch (Exception e) {
@@ -293,7 +293,7 @@ public class WaterTankController extends BaseController{
 		Result rj = new Result(0);
 		try {
 			Integer pid = getParaToInt("pid");
-			ProjectModel projectModel = ProjectModel.dao.findById(pid);
+			Record projectModel = UserProjectModel.dao.getUserProjectDataByProjectId(pid);
 			rj.setData(projectModel);
 			rj.setCode(1);
 		} catch (Exception e) {

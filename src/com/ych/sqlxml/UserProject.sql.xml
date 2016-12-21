@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlGroup namespace="UserProject">
+	
+	<!-- 动态SQL处理 -->
+	<sql id="pager">
+		<![CDATA[ 
+			from(
+				select * from userproject where 1=1
+			)t 
+		]]>
+	</sql>
+	
+	<sql id="pagerByUserId">
+		<![CDATA[ 
+			from(
+				select * from userproject where 1=1
+				<% if(!isEmpty(userId)){ %>
+				 AND userId = #$userId$#
+				<% } %>
+			)t 
+		]]>
+	</sql>
+	
+</sqlGroup>

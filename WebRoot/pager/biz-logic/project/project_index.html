@@ -11,39 +11,28 @@
         <table id="grid" data-options="rownumbers:true,pagination:true,url:'project/list'"  title="项目列表">
             <thead>
             	<th data-options="field:'id',resizable:true,align:'left',hidden:true">ID</th>
-                <th data-options="field:'userId',width:90,resizable:true,align:'left'">用户ID</th>
-                <th data-options="field:'province',width:90,resizable:true,align:'left'">省份</th>
-                <th data-options="field:'city',width:90,resizable:true,align:'left'">城市</th>
-                <th data-options="field:'projectName',width:90,resizable:true,align:'left'">项目名称</th>
                 <th data-options="field:'codeId',width:90,resizable:true,align:'left'">编码ID</th>
                 <th data-options="field:'accessTag',width:90,resizable:true,align:'left'">访问标识</th>
-                <th data-options="field:'siteCardNumber',width:90,resizable:true,align:'left'">站点卡号</th>
-                <th data-options="field:'tankType',width:90,resizable:true,align:'left',formatter:formatter.tankType">水箱控制</th>
+                <th data-options="field:'projectName',width:90,resizable:true,align:'left'">项目名称</th>
+                <th data-options="field:'projectAddress',width:90,resizable:true,align:'left'">项目地点</th>
+                <th data-options="field:'projectType',width:90,resizable:true,align:'left'">工程类型</th>
+                <th data-options="field:'jireType',width:90,resizable:true,align:'left'">集热类型</th>
+                <th data-options="field:'jireScale',width:90,resizable:true,align:'left'">集热规模</th>
+                <th data-options="field:'jireZone',width:90,resizable:true,align:'left'">集热分区</th>
+                <th data-options="field:'tankConfigure',width:90,resizable:true,align:'left'">水箱配置</th>
+                <th data-options="field:'fureShape',width:90,resizable:true,align:'left'">辅热形式</th>
+                <th data-options="field:'waterZone',width:90,resizable:true,align:'left'">供水分区</th>
+                <th data-options="field:'completeTime',width:90,resizable:true,align:'left'">竣工时间</th>
+                <th data-options="field:'state',width:90,resizable:true,align:'left'">在线状态</th>
                 <th data-options="field:'opt',width:80,resizable:true,align:'left',formatter:formatter.opt">操作</th>
             </thead>
         </table>
     </div>
     
     <div class="hide-panel">
-    	<div id="ProjectDialog" style="width:400px;height:400px;padding-left:30px;" data-options="resizable:false,modal:true,closed: true">
+    	<div id="ProjectDialog" style="width:400px;height:500px;padding-left:30px;" data-options="resizable:false,modal:true,closed: true">
     			<form id="ProjectEditForm" action="project/add" class="form_style" method="post" onsubmit="return false;">
     				<input type="hidden" id="id" name="id"/>
-	    			<div class="form-field">
-		    			<label>用户ID:</label>
-		    			<input type="text" name="userId" id="userId"/>
-	    			</div>
-	    			<div class="form-field">
-		    			<label>省份:</label>
-		    			<input type="text" name="province" id="province"/>
-	    			</div>
-	    			<div class="form-field">
-		    			<label>城市:</label>
-		    			<input type="text" name="city" id="city"/>
-	    			</div>
-	    			<div class="form-field">
-		    			<label>项目名称:</label>
-		    			<input type="text" name="projectName" id="projectName"/>
-	    			</div>
 	    			<div class="form-field">
 		    			<label>编码ID:</label>
 		    			<input type="text" name="codeId" id="codeId"/>
@@ -53,18 +42,45 @@
 		    			<input type="text" name="accessTag" id="accessTag"/>
 	    			</div>
 	    			<div class="form-field">
-		    			<label>站点卡号:</label>
-		    			<input type="text" name="siteCardNumber" id="siteCardNumber"/>
+		    			<label>项目名称:</label>
+		    			<input type="text" name="projectName" id="projectName"/>
 	    			</div>
 	    			<div class="form-field">
-		    			<label>水箱控制:</label>
-		    			<input id="status" name="tankType" class="easyui-combobox" data-options="
-								editable:false,
-								required:false,
-						        valueField:'id',
-						        textField:'name',
-						        data:[{id:0,name:'单水箱'},{id:1,name:'双水箱'}]"
-						        style="width: 155px;">
+		    			<label>项目地点:</label>
+		    			<input type="text" name="projectAddress" id="projectAddress"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>工程类型:</label>
+		    			<input type="text" name="projectType" id="projectType"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>集热类型:</label>
+		    			<input type="text" name="jireType" id="jireType"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>集热规模:</label>
+		    			<input type="text" name="jireScale" id="jireScale"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>集热分区:</label>
+		    			<input type="text" name="jireZone" id="jireZone"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>水箱配置:</label>
+		    			<input type="text" name="tankConfigure" id="tankConfigure"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>辅热形式:</label>
+		    			<input type="text" name="fureShape" id="fureShape"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>供水分区:</label>
+		    			<input type="text" name="waterZone" id="waterZone"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>竣工时间:</label>
+		    			<input id="completeTime" name="completeTime" style="width:130px;"
+							onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'});" class="Wdate"/>
 	    			</div>
     			</form>
     	</div>
