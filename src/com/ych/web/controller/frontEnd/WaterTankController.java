@@ -228,7 +228,7 @@ public class WaterTankController extends BaseController{
 		Result rj = new Result(0);
 		try {
 			Pager pager = createPager();
-			pager.addParam("userId", getParaToInt("userId"));
+			pager.addParam("userId", getPara("userId"));
 			Page<?> page = UserProjectModel.dao.getPagerByUserId(pager);
 			rj.setData(page);
 			rj.setCode(1);
