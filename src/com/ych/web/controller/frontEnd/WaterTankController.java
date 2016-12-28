@@ -27,6 +27,7 @@ import com.ych.web.model.UserProjectModel;
 import com.ych.web.model.RealTimeDataModel;
 import com.ych.web.model.Result;
 import com.ych.web.model.WXUserModel;
+import com.ych.web.model.WatersupplyparameterModel;
 import com.ych.web.validator.WtValidator;
 
 @Control(controllerKey = "/jk")
@@ -274,6 +275,71 @@ public class WaterTankController extends BaseController{
 	}
 	
 	
+		//添加or更新供水系统参数
+		public void updateWaterSupplyParamter(){
+			Result rj = new Result(0);
+			try {
+				String dataStr = getPara("dataStr");
+				if (null!=dataStr && !"".equals(dataStr) && dataStr.length() == 190) {
+					String head = dataStr.substring(0, 4);
+					String id = dataStr.substring(4, 9);
+					String dateTime = dataStr.substring(9, 23);
+					String afState = dataStr.substring(23, 29);
+					String fhxgbfState = dataStr.substring(29, 35);
+					String temperatureInSource = dataStr.substring(35, 41);
+					String watermeterInSource = dataStr.substring(41, 47);
+					String ammeterInSource = dataStr.substring(47, 53);
+					String updateStr = dataStr.substring(53, 67);
+					String heatingCycle = dataStr.substring(67, 74);
+					String heatingStart = dataStr.substring(74, 82);
+					String heatingEnd = dataStr.substring(82, 90);
+					String fureStart = dataStr.substring(90, 98);
+					String fureEnd = dataStr.substring(98, 106);
+					String frsw = dataStr.substring(106, 109);
+					String fwbswd = dataStr.substring(109, 112);
+					String wcswz = dataStr.substring(112, 115);
+					String gdhssw = dataStr.substring(115, 118);
+					String gdfdsw = dataStr.substring(118, 121);
+					String xhfdsw = dataStr.substring(121, 124);
+					String swks1 = dataStr.substring(124, 128);
+					String swjs1 = dataStr.substring(128, 132);
+					String swz1 = dataStr.substring(132, 135);
+					String swks2 = dataStr.substring(135, 139);
+					String swjs2 = dataStr.substring(139, 143);
+					String swz2 = dataStr.substring(143, 146);
+					String swks3 = dataStr.substring(146, 150);
+					String swjs3 = dataStr.substring(150, 154);
+					String swz3 = dataStr.substring(154, 157);
+					String swks4 = dataStr.substring(157, 161);
+					String swjs4 = dataStr.substring(161, 165);
+					String swz4 = dataStr.substring(165, 168);
+					String aqsw = dataStr.substring(168, 171);
+					String ytbssjcd = dataStr.substring(171, 174);
+					String pksjcd = dataStr.substring(174, 177);
+					String sostelphone = dataStr.substring(177, 188);
+					String multiple = dataStr.substring(188, 190);
+					WatersupplyparameterModel model = new WatersupplyparameterModel();
+					model.set("head", head).set("id", id).set("dateTime", dateTime).set("afState", afState)
+					.set("fhxgbfState", fhxgbfState).set("temperatureInSource", temperatureInSource).set("watermeterInSource", watermeterInSource).set("ammeterInSource", ammeterInSource).set("updateStr", updateStr).set("heatingCycle", heatingCycle).set("heatingStart", heatingStart)
+					.set("heatingEnd", heatingEnd).set("fureStart", fureStart).set("fureEnd", fureEnd).set("frsw", frsw).set("fwbswd", fwbswd).set("wcswz", wcswz).set("gdhssw", gdhssw)
+					.set("gdfdsw", gdfdsw).set("xhfdsw", xhfdsw).set("swks1", swks1).set("swjs1", swjs1).set("swz1", swz1).set("swks2", swks2).set("swjs2", swjs2).set("swz2", swz2)
+					.set("swks3", swks3).set("swjs3", swjs3).set("swz3", swz3).set("swks4", swks4).set("swjs4", swjs4).set("swz4", swz4)
+					.set("aqsw", aqsw).set("ytbssjcd", ytbssjcd).set("pksjcd", pksjcd).set("sostelphone", sostelphone).set("multiple", multiple);
+					WatersupplyparameterModel dataModel = WatersupplyparameterModel.dao.findById(id);
+					if (null==dataModel) {
+						model.save();
+					}else{
+						model.update();
+					}
+					rj.setCode(1);
+				}
+			} catch (Exception e) {
+				LOG.error("WaterTankController->updateWaterSupplyParamter[添加or更新供水系统参数失败]", e);
+			}
+			renderJson(rj);
+		}
+	
+	
 	//获取水箱界面数据  实时监测数据
 	public void getRealTimeData(){
 		Result rj = new Result(0);
@@ -287,6 +353,22 @@ public class WaterTankController extends BaseController{
 		}
 		renderJson(rj);
 	}
+	
+	
+	//获取运行参数
+	public void getRuntimeParamter(){
+		Result rj = new Result(0);
+		try {
+			Integer pid = getParaToInt("pid");
+			Record record = WatersupplyparameterModel.dao.getWatersupplyparameterByProjectId(pid);
+			rj.setData(record);
+			rj.setCode(1);
+		} catch (Exception e) {
+			LOG.error("WaterTankController->getRuntimeParamter[获取运行参数失败]", e);
+		}
+		renderJson(rj);
+	}
+	
 	
 	//获取项目状况
 	public void getProjectInfo(){
@@ -312,5 +394,10 @@ public class WaterTankController extends BaseController{
 		
 		String str1 = "01031500220150403164101000000520590580581511510491511511510141001000000000000001110000000000000000000000000000000000000";
 		System.out.println(str1.length());
+		str1 = "010560620201611182135481100000000100000010000000000000099990001234111111105002359040023500000030000000400065080005035001005070008300201130123002016301730020180019000200200450031868192848301";
+		System.out.println(str1.length());
+		str1 = "123456";
+		System.out.println(str1.length());
+		
 	}
 }

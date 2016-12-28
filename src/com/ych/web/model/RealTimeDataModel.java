@@ -13,7 +13,7 @@ public class RealTimeDataModel extends Model<RealTimeDataModel> {
 	
 	
 	public Record getRealTimeDataByProjectId(int pid){
-		return Db.findFirst("select t1.* from realtimedata t1 LEFT JOIN project t2 ON t2.codeId = t1.id LEFT JOIN userproject t3 ON t3.accessTag = t2.accessTag AND t3.codeId = t2.codeId WHERE t3.id = ?", pid);
+		return Db.findFirst("select t1.* from realtimedata t1 LEFT JOIN project t2 ON t2.codeId = t1.id JOIN userproject t3 ON t3.accessTag = t2.accessTag AND t3.codeId = t2.codeId AND t3.id = ?", pid);
 	}
 	
 }
