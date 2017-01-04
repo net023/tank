@@ -188,6 +188,7 @@ public class WaterTankController extends BaseController{
 				projectModel.save();
 			}
 			rj.setCode(1);
+			rj.setData(projectModel.getInt("id"));
 		} catch (Exception e) {
 			LOG.error("WaterTankController->addProject[添加项目失败]", e);
 		}

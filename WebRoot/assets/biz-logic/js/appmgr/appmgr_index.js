@@ -8,6 +8,7 @@ $(function() {
             handler : function(){
             	$("#appEditForm").resetForm();
             	$('#id').val('');
+            	$("#si").text('');
             	fileUp = false;
             	$('#appDialog').dialog('open').dialog('setTitle','新建app版本');
             }
@@ -38,6 +39,35 @@ $(function() {
 		        	 	$('#appDialog').dialog('close');
 		         }}
 		        ]
+	});
+	
+	
+	var ii;
+	$("#apkFile").fileupload({
+		url:'apk/add',
+		dataType:'json',
+		//acceptFileTypes:/(\.|\/)(pdf)$/i,
+//		maxNumberOfFiles : 1,
+//		formData:{id:$("#id").val(),pdfName:$("#pdfName").val()},
+		autoUpload:true,
+		add:function(e,data){
+			ii = layer.load();
+			$("#si").text("已经选择文件:"+data.files[0].name);
+			data.submit();
+		},
+		done:function(e,result){
+			layer.close(ii);
+			if(result.result.r){
+				$.messager.alert("上传完成",result.result.m);
+				$("#apk_url").val(result.result.id);
+			}else{
+				$.messager.alert("上传失败",result.result.m);
+			}
+		},
+		fail:function(){
+			layer.close(ii);
+			$.messager.alert("错误提示","系统异常请联系管理员。");
+		}
 	});
 	
 });
@@ -85,6 +115,7 @@ function update(rowIndex){
     $('#appDialog').dialog('open').dialog('setTitle','修改app版本');
     $('#appEditForm')._jsonToForm(data);
     $("#create_time").val(data.create_time);
+    $("#si").text("");
 }
 
 function delete_(rowIndex) {

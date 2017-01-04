@@ -86,5 +86,8 @@ public class SysConstants {
 	public static final String RADIUS = prop.get("baidu.radius");
 	
 	
+	//服务器地址(ip)
+	public static final String serverIp=prop.get("serverip");
+	
 	
 }
