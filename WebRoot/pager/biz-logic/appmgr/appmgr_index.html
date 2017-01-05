@@ -25,6 +25,11 @@
     
     <div class="hide-panel">
     	<div id="appDialog" style="width:550px;height:500px;padding-left:30px;" data-options="resizable:false,modal:true,closed: true">
+    			<div class="form-field">
+	    			<label>apk上传:</label>
+	    			<input id="apkFile" type="file" style="width: 70px;">
+	    			<label id="si">未选择文件</label>
+    			</div>
     			<form id="appEditForm" action="appmgr/add" class="form_style" method="post" onsubmit="return false;">
     				<input type="hidden" id="id" name="id"/>
 	    			<div class="form-field">
@@ -39,11 +44,6 @@
 		    			<label>创建日期:</label>
 		    			<input id="create_time" name="create_time" style="width:150px;"
 							onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});" class="Wdate"/>
-	    			</div>
-	    			<div class="form-field">
-		    			<label>apk上传:</label>
-		    			<input id="apkFile" name="apkFile" type="file" style="width: 70px;">
-		    			<label id="si">未选择文件</label>
 	    			</div>
 	    			<div class="form-field">
 		    			<label>apk下载地址:</label>

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +19,7 @@ import com.ych.base.common.BaseController;
 import com.ych.base.common.Pager;
 import com.ych.core.plugin.annotation.Control;
 import com.ych.web.listenner.SessionListenner;
+import com.ych.web.model.ApkModel;
 import com.ych.web.model.AppMgrModel;
 import com.ych.web.model.CompanyProfileModel;
 import com.ych.web.model.CustomServiceModel;
@@ -383,6 +385,19 @@ public class WaterTankController extends BaseController{
 			LOG.error("WaterTankController->getProjectInfo[获取项目状况失败]", e);
 		}
 		renderJson(rj);
+	}
+	
+	//下载apk
+	public void downloadApk(){
+		try {
+			Integer id = getParaToInt("id");
+			ApkModel apkModel = ApkModel.dao.findById(id);
+			File tempFile = File.createTempFile(UUID.randomUUID().toString(), ".apk");
+			FileUtils.writeByteArrayToFile(tempFile, apkModel.getBytes("apk_res"));
+			renderFile(tempFile);
+		} catch (Exception e) {
+			LOG.error("WaterTankController->downloadApk[下载apk包失败]", e);
+		}
 	}
 	
 	public static void main(String[] args) {

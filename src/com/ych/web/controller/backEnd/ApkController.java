@@ -30,7 +30,7 @@ public class ApkController extends BaseController {
 			
 			if(save){
 				result.put(RESULT, true);
-				result.put("id", SysConstants.serverIp+"apk/download?id="+apkModel.getInt("id"));
+				result.put("id", SysConstants.serverIp+"jk/downloadApk?id="+apkModel.getInt("id"));
 				result.put(MESSAGE, "apk添加成功！");
 			}else{
 				result.put(RESULT, false);
