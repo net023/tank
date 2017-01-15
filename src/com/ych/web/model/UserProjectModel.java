@@ -33,6 +33,13 @@ public class UserProjectModel extends Model<UserProjectModel> {
 				param.toArray());
 	}
 	
+	
+	public Page<Record> getPagerByUserId2(Pager pager) {
+		LinkedList<Object> param = new LinkedList<Object>();
+		return Db.paginate(pager.getPageNo(), pager.getPageSize(), "select * ", SqlXmlKit.getSql("UserProject.pagerByUserId2", pager.getParamsMap(), param), param.toArray());
+	}
+	
+	
 	public Record getUserProjectDataByProjectId(int pid){
 		return Db.findFirst("select t2.projectName,t1.completeTime,t1.fureShape,t1.jireScale,t1.jireType,t1.jireZone,t1.projectAddress,t1.projectType,t1.tankConfigure,t1.waterZone from project t1 JOIN userproject t2 ON t2.accessTag = t1.accessTag AND t2.codeId = t1.codeId AND t2.id = ?", pid);
 	}

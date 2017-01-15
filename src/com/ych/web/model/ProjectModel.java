@@ -19,7 +19,7 @@ public class ProjectModel extends Model<ProjectModel> {
 		LinkedList<Object> param = new LinkedList<Object>();
 		return dao.paginate(pager.getPageNo(), pager.getPageSize(),
 				" select * ",
-				SqlXmlKit.getSql("Project.pager", pager.getParamsMap(), param),
+				SqlXmlKit.getSql("Project.pager2", pager.getParamsMap(), param),
 				param.toArray());
 	}
 	

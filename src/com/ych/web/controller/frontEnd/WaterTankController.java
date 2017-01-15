@@ -233,7 +233,7 @@ public class WaterTankController extends BaseController{
 		try {
 			Pager pager = createPager();
 			pager.addParam("userId", getPara("userId"));
-			Page<?> page = UserProjectModel.dao.getPagerByUserId(pager);
+			Page<Record> page = UserProjectModel.dao.getPagerByUserId2(pager);
 			rj.setData(page);
 			rj.setCode(1);
 		} catch (Exception e) {
@@ -260,7 +260,7 @@ public class WaterTankController extends BaseController{
 				String furehaoneng = dataStr.substring(99, 109);
 				String nengxiao = dataStr.substring(109, 119);
 				RealTimeDataModel model = new RealTimeDataModel();
-				model.set("head", head).set("id", id).set("dateTime", dateTime).set("jobNumber", jobNumber)
+				model.set("head", head).set("id", id).set("dateTime", dateTime).set("jobNumber", jobNumber).set("current_time", new Date())
 					.set("temperatureSignal", temperatureSignal).set("percentage", percentage).set("ioState", ioState)
 					.set("powerConsumption", powerConsumption).set("furehaoneng", furehaoneng).set("nengxiao", nengxiao);
 				RealTimeDataModel dataModel = RealTimeDataModel.dao.findById(id);

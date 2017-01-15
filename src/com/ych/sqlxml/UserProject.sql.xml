@@ -21,4 +21,18 @@
 		]]>
 	</sql>
 	
+	<sql id="pagerByUserId2">
+		<![CDATA[ 
+			from(
+				select t1.*,DATE_ADD(t3.last_connect_time,INTERVAL 180 second) >= CURRENT_TIMESTAMP as 'isOnline',t3.dateTime from userproject t1
+				LEFT JOIN project t2 ON t1.codeId=t2.codeId AND t1.accessTag=t2.accessTag 
+				LEFT JOIN realtimedata t3 ON t2.codeId=t3.id
+				where 1=1
+				<% if(!isEmpty(userId)){ %>
+				 AND t1.userId = #'$userId$'#
+				<% } %>
+			)t 
+		]]>
+	</sql>
+	
 </sqlGroup>
