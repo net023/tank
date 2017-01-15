@@ -260,7 +260,7 @@ public class WaterTankController extends BaseController{
 				String furehaoneng = dataStr.substring(99, 109);
 				String nengxiao = dataStr.substring(109, 119);
 				RealTimeDataModel model = new RealTimeDataModel();
-				model.set("head", head).set("id", id).set("dateTime", dateTime).set("jobNumber", jobNumber).set("current_time", new Date())
+				model.set("head", head).set("id", id).set("dateTime", dateTime).set("jobNumber", jobNumber).set("last_connect_time", new Date())
 					.set("temperatureSignal", temperatureSignal).set("percentage", percentage).set("ioState", ioState)
 					.set("powerConsumption", powerConsumption).set("furehaoneng", furehaoneng).set("nengxiao", nengxiao);
 				RealTimeDataModel dataModel = RealTimeDataModel.dao.findById(id);
