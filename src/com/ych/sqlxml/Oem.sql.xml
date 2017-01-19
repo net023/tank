@@ -5,7 +5,7 @@
 	<sql id="pager">
 		<![CDATA[ 
 			from(
-				select * from project t1 
+				select * from oem_title t1 
 			)t 
 		]]>
 	</sql>
