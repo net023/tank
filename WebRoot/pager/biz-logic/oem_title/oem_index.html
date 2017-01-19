@@ -1,0 +1,33 @@
+<#compress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>自定义标题</title>
+<meta charset="UTF-8">
+<% include("/pager/common/quote.html"){} %>
+</head>
+<body>
+    <div class="body-center">
+        <table id="grid" data-options="rownumbers:true,pagination:true,url:'oem/list'"  title="标题管理">
+            <thead>
+            	<th data-options="field:'id',resizable:true,align:'left',hidden:true">ID</th>
+                <th data-options="field:'标题',width:90,resizable:true,align:'left'">标题</th>
+                <th data-options="field:'opt',width:80,resizable:true,align:'left',formatter:formatter.opt">操作</th>
+            </thead>
+        </table>
+    </div>
+    
+    <div class="hide-panel">
+    	<div id="oemDialog" style="width:400px;height:500px;padding-left:30px;" data-options="resizable:false,modal:true,closed: true">
+    			<form id="oemEditForm" action="oem/add" class="form_style" method="post" onsubmit="return false;">
+    				<input type="hidden" id="id" name="id"/>
+	    			<div class="form-field">
+		    			<label>编码ID:</label>
+		    			<input type="text" name="codeId" id="codeId"/>
+	    			</div>
+    			</form>
+    	</div>
+    </div>
+</body>
+</html>
+</#compress>

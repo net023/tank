@@ -13,6 +13,7 @@ import com.ych.base.model.SysMenusModel;
 import com.ych.base.model.SysUserModel;
 import com.ych.core.plugin.annotation.Control;
 import com.ych.tools.SysConstants;
+import com.ych.web.model.OemModel;
 
 /**
  * 登录
@@ -23,6 +24,12 @@ public class LoginController extends BaseController {
 	private static final Logger LOG = Logger.getLogger(LoginController.class);
 
 	public void index() {
+		OemModel maxRecord = OemModel.dao.getMaxRecord();
+		String defaultTitle = "物联网水箱后台管理系统";
+		if(maxRecord!=null){
+			defaultTitle  = maxRecord.getStr("title");
+		}
+		setAttr("defaultTitle", defaultTitle);
 		render("login");
 	}
 
@@ -63,6 +70,14 @@ public class LoginController extends BaseController {
 			setAttr("sysDate", format.format(Calendar.getInstance().getTime()));
 			setAttr("menus", user.get("menus"));
 			setAttr("nick", user.get("nick"));
+			
+			OemModel maxRecord = OemModel.dao.getMaxRecord();
+			String defaultTitle = "物联网水箱后台管理系统";
+			if(maxRecord!=null){
+				defaultTitle  = maxRecord.getStr("title");
+			}
+			setAttr("defaultTitle", defaultTitle);
+			
 			render("main");
 		}
 	}
