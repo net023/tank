@@ -3,8 +3,6 @@ package com.ych.web.controller.frontEnd;
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -25,9 +23,9 @@ import com.ych.web.model.CompanyProfileModel;
 import com.ych.web.model.CustomServiceModel;
 import com.ych.web.model.IrradiateModel;
 import com.ych.web.model.PdfModel;
-import com.ych.web.model.UserProjectModel;
 import com.ych.web.model.RealTimeDataModel;
 import com.ych.web.model.Result;
+import com.ych.web.model.UserProjectModel;
 import com.ych.web.model.WXUserModel;
 import com.ych.web.model.WatersupplyparameterModel;
 import com.ych.web.validator.WtValidator;
@@ -58,8 +56,10 @@ public class WaterTankController extends BaseController{
 				model.set("name", getPara("name"));
 				model.set("phone", getPara("phone"));
 				model.set("login_time", date);
+				model.set("password", "12345678");
 				model.save();
 			}else{
+				model.set("name", getPara("name"));
 				model.set("login_time", date);
 				model.update();
 			}
@@ -70,7 +70,32 @@ public class WaterTankController extends BaseController{
 			session.setAttribute(SessionListenner.SESSION_USER_KEY, model);
 			rj.setCode(1);
 		} catch (Exception e) {
-			LOG.error("WaterTankController->login[微信登录失败]", e);
+			LOG.error("WaterTankController->wxLogin[微信登录失败]", e);
+		}
+		renderJson(rj);
+	}
+	
+	
+	public void accountLogin(){
+		Result rj = new Result(0);
+		try {
+			Date date = Calendar.getInstance().getTime();
+			String userName = getPara("name");
+			String password = getPara("password");
+			WXUserModel model = WXUserModel.dao.accountLogin(userName,password);
+			if(model==null){
+				rj.setData("账号或密码错误");
+			}else{
+				//存入session
+				HttpSession session = getSession();
+				session.setMaxInactiveInterval(30*60);
+				session.setAttribute(SessionListenner.SESSION_USER_KEY, model);
+				model.set("login_time", date).update();
+				rj.setCode(1);
+				rj.setData("登录成功");
+			}
+		} catch (Exception e) {
+			LOG.error("WaterTankController->accountLogin[账户登录失败]", e);
 		}
 		renderJson(rj);
 	}

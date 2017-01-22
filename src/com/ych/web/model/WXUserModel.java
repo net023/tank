@@ -25,6 +25,11 @@ public class WXUserModel extends Model<WXUserModel> {
 		return wxUserModel;
 	}
 	
+	public WXUserModel accountLogin(String userName,String password){
+		WXUserModel wxUserModel = dao.findFirst("select * from wxuser where name = ? and password = ?", userName,password);
+		return wxUserModel;
+	}
+	
 	
 	public Page<WXUserModel> getPager(Pager pager) {
 		LinkedList<Object> param = new LinkedList<Object>();

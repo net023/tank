@@ -64,6 +64,12 @@ public class LoginController extends BaseController {
 	public void main() {
 		SysUserModel user = getUser();
 		if(user==null){
+			OemModel maxRecord = OemModel.dao.getMaxRecord();
+			String defaultTitle = "物联网水箱后台管理系统";
+			if(maxRecord!=null){
+				defaultTitle  = maxRecord.getStr("title");
+			}
+			setAttr("defaultTitle", defaultTitle);
 			render("login");
 		}else{
 			SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

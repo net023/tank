@@ -11,7 +11,7 @@ $(function() {
         }]
 	});
 	
-	$('#ProjectDialog').dialog({
+	$('#oemDialog').dialog({
 		onBeforeOpen:function(){
 			$("#oemEditForm").resetForm();
 			$("#id").val('');

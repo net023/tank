@@ -38,9 +38,27 @@
                 <th data-options="field:'reg_time',width:80,resizable:true,align:'left'">账号创建时间</th>
                 <th data-options="field:'login_time',width:80,resizable:true,align:'left'">最后登录时间</th>
                 <th data-options="field:'status',width:80,resizable:true,align:'left',formatter:formatter.status">状态</th>
+                <th data-options="field:'opt',width:80,resizable:true,align:'left',formatter:formatter.opt">操作</th>
             </thead>
         </table>
     </div>
+    
+    <div class="hide-panel">
+    	<div id="userDialog" style="width:400px;height:400px;padding-left:30px;" data-options="resizable:false,modal:true,closed: true">
+    			<form id="userEditForm" action="wx_user/add" class="form_style" method="post" onsubmit="return false;">
+    				<input type="hidden" id="id" name="id"/>
+	    			<div class="form-field">
+		    			<label>用户名:</label>
+		    			<input type="text" name="name" id="name"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>密码:</label>
+		    			<input type="text" name="password" id="password"/>
+	    			</div>
+    			</form>
+    	</div>
+    </div>
+    
 </body>
 </html>
 </#compress>
