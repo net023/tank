@@ -41,8 +41,8 @@ public class WXUserController extends BaseController {
 		if (getPara("endDate") != null && !"".equals(getPara("endDate"))) {
 			pager.addParam("endDate", getPara("endDate"));
 		}
-		if (getPara("openID") != null && !"".equals(getPara("openID"))) {
-			pager.addParam("openID", getPara("openID"));
+		if (getPara("userName") != null && !"".equals(getPara("userName"))) {
+			pager.addParam("userName", getPara("userName"));
 		}
 		Page<?> page = WXUserModel.dao.getPager(pager);
 		setAttr("total", page.getTotalRow());

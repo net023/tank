@@ -12,8 +12,8 @@
 				<% if(!isEmpty(endDate)){ %>
 				 AND reg_time<DATE_ADD(#'$endDate$'#,INTERVAL 1 DAY)
 				<% } %>
-				<% if(!isEmpty(openID)){ %>
-				 AND openid = #'$openID$'#
+				<% if(!isEmpty(userName)){ %>
+				 AND name = #'$userName$'#
 				<% } %>
 			)t order by t.reg_time
 		]]>
