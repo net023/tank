@@ -21,6 +21,9 @@ public class UserProjectController extends BaseController {
 	
 	public void list(){
 		Pager pager = createPager();
+		if (getPara("userName") != null && !"".equals(getPara("userName"))) {
+			pager.addParam("userName", getPara("userName"));
+		}
 		Page<?> page = UserProjectModel.dao.getPager(pager);
 		setAttr("total", page.getTotalRow());
 		setAttr("rows", page.getList());

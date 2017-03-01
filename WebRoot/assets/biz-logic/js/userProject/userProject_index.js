@@ -11,6 +11,11 @@ $(function() {
         }]
 	});
 	
+	$('#queryButton').click(function(){
+        var params = $('#queryForm')._formToJson();
+        $(grid).datagrid('load',params);
+    });
+	
 	$('#ProjectDialog').dialog({
 		onBeforeOpen:function(){
 			$("#ProjectEditForm").resetForm();

@@ -32,7 +32,9 @@ $(function() {
         }
 	});
 	
-    
+    $("#downloadTemplate").click(function(){
+    	window.open("irradiate/download");
+    });
 });
 var formatter = {
     status:function(value,rowData,rowIndex){

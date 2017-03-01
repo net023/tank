@@ -5,7 +5,10 @@
 	<sql id="pager">
 		<![CDATA[ 
 			from(
-				select * from userproject where 1=1
+				select t1.* from userproject t1
+				<% if(!isEmpty(userName)){ %>
+					JOIN wxuser t2 ON t2.openid = t1.userId AND t2.name = #'$userName$'#
+				<% } %>
 			)t 
 		]]>
 	</sql>

@@ -31,9 +31,9 @@
         
         <table id="grid"  data-options="rownumbers:true,pagination:true,url:'wx_user/list'" title="微信用户列表">
             <thead>
-            	<th data-options="field:'id',width:80,resizable:true,align:'left'">id</th>
-                <th data-options="field:'openid',width:80,resizable:true,align:'left'">openID</th>
-                <th data-options="field:'name',width:80,resizable:true,align:'left'">微信昵称</th>
+            	<th data-options="field:'id',width:80,resizable:true,align:'left',hidden:true">id</th>
+                <th data-options="field:'openid',width:80,resizable:true,align:'left',hidden:true">微信账号</th>
+                <th data-options="field:'name',width:80,resizable:true,align:'left'">用户账号</th>
                 <th data-options="field:'phone',width:120,resizable:true,align:'left'">手机号码</th>
                 <th data-options="field:'reg_time',width:80,resizable:true,align:'left'">账号创建时间</th>
                 <th data-options="field:'login_time',width:80,resizable:true,align:'left'">最后登录时间</th>

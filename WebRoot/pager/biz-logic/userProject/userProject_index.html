@@ -8,6 +8,21 @@
 </head>
 <body>
     <div class="body-center">
+    	<div class="html-panel query-panel" id="query_con">
+            <div class="panel-header"><div class="panel-title">查询条件</div></div>
+            <div class="panel-content" id="menuMgrPanel">
+            	 <form onsubmit="return false;" id="queryForm" class="form_style">
+                		<span class="spacing">
+                			<label>用户账号：</label>
+                			<input type="text" name="userName" >
+                		</span>
+		                <span class="spacing">
+		                	<input type="submit" id="queryButton" value="查询"/>
+		                </span>
+                </form>
+            </div>
+        </div>
+    
         <table id="grid" data-options="rownumbers:true,pagination:true,url:'userProject/list'"  title="用户项目列表">
             <thead>
             	<th data-options="field:'id',resizable:true,align:'left',hidden:true">ID</th>

@@ -36,6 +36,9 @@
 		                	<input type="submit" id="queryButton" value="查询"/>
 		                </span>
 		                <span>
+		                	<a href="#" id="downloadTemplate">下载模板</a>
+		                </span>
+		                <span>
 		                	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		             	    <label>导入excel太阳能辐照量表：</label>
 		                	<input type="file" id="excelFile" name="excelFile">
@@ -46,10 +49,10 @@
         
         <table id="grid" data-options="rownumbers:true,pagination:true,url:'irradiate/list'" title="辐照量列表">
             <thead>
-            	<th data-options="field:'id',hidden:false,width:20,resizable:true,align:'left'">ID</th>
+            	<th data-options="field:'id',hidden:false,width:20,resizable:true,align:'left',hidden:true">ID</th>
                 <th data-options="field:'province',width:80,resizable:true,align:'left'">省份</th>
                 <th data-options="field:'city',width:80,resizable:true,align:'left'">城市</th>
-                <th data-options="field:'latitude',width:80,resizable:true,align:'left'">纬度</th>
+                <th data-options="field:'latitude',width:80,resizable:true,align:'left',hidden:true">纬度</th>
                 <th data-options="field:'mj',width:80,resizable:true,align:'left'">日辐照</th>
             </thead>
         </table>

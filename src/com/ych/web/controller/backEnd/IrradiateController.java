@@ -74,6 +74,9 @@ public class IrradiateController extends BaseController {
 				String province = row.get(0);
 				String city = row.get(1);
 				String latitudeStr = row.get(2);
+				if(null==latitudeStr||"".equals(latitudeStr)){
+					latitudeStr="0";
+				}
 				Double latitude = Double.valueOf(latitudeStr);
 				latitude = Double.valueOf(df.format(latitude));
 				
@@ -148,6 +151,11 @@ public class IrradiateController extends BaseController {
 			result.put(MESSAGE, "pdf删除失败！");
 		}
 		renderJson(result);
+	}
+	
+	public void download(){
+		String templatePath = getRequest().getServletContext().getRealPath("/template.xlsx");
+		renderFile(new File(templatePath));
 	}
 	
 }

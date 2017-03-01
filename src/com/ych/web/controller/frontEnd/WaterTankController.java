@@ -53,13 +53,13 @@ public class WaterTankController extends BaseController{
 				model = new WXUserModel();
 				model.set("openid", openid);
 				model.set("reg_time", new Date());
-				model.set("name", getPara("name"));
+				model.set("name", new String(getPara("name").getBytes("iso-8859-1"), "utf-8"));
 				model.set("phone", getPara("phone"));
 				model.set("login_time", date);
 				model.set("password", "12345678");
 				model.save();
 			}else{
-				model.set("name", getPara("name"));
+				model.set("name", new String(getPara("name").getBytes("iso-8859-1"), "utf-8"));
 				model.set("login_time", date);
 				model.update();
 			}
