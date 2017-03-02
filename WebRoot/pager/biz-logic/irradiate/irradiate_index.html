@@ -54,10 +54,30 @@
                 <th data-options="field:'city',width:80,resizable:true,align:'left'">城市</th>
                 <th data-options="field:'latitude',width:80,resizable:true,align:'left',hidden:true">纬度</th>
                 <th data-options="field:'mj',width:80,resizable:true,align:'left'">日辐照</th>
+                <th data-options="field:'opt',width:80,resizable:true,align:'left',formatter:formatter.opt">操作</th>
             </thead>
         </table>
     </div>
     
+    <div class="hide-panel">
+    	<div id="irradiateDialog" style="width:400px;height:500px;padding-left:30px;" data-options="resizable:false,modal:true,closed: true">
+    			<form id="irradiateEditForm" action="irradiate/update" class="form_style" method="post" onsubmit="return false;">
+    				<input type="hidden" id="id" name="id"/>
+	    			<div class="form-field">
+		    			<label>省份:</label>
+		    			<input type="text" name="province" id="province"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>城市:</label>
+		    			<input type="text" name="city" id="city"/>
+	    			</div>
+	    			<div class="form-field">
+		    			<label>日辐照:</label>
+		    			<input type="text" name="mj" id="mj"/>
+	    			</div>
+    			</form>
+    	</div>
+    </div>
 </body>
 </html>
 </#compress>

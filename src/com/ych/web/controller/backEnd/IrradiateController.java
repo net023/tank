@@ -20,6 +20,7 @@ import com.ych.base.common.BaseController;
 import com.ych.base.common.Pager;
 import com.ych.core.plugin.annotation.Control;
 import com.ych.tools.excel.XxlsPrint;
+import com.ych.web.model.AppMgrModel;
 import com.ych.web.model.IrradiateModel;
 import com.ych.web.model.PdfModel;
 
@@ -83,10 +84,13 @@ public class IrradiateController extends BaseController {
 				String mjStr = row.get(3);
 				Double mj = Double.valueOf(mjStr);
 				mj = Double.valueOf(df.format(mj));
-				IrradiateModel irradiateModel = IrradiateModel.dao.getModel(province, city, latitude, mj);
+				IrradiateModel irradiateModel = IrradiateModel.dao.getModelByProvinceCity(province, city);
+//				IrradiateModel irradiateModel = IrradiateModel.dao.getModel(province, city, latitude, mj);
 				if(irradiateModel==null){
 					irradiateModel = new IrradiateModel();
 					irradiateModel.set("province", province).set("city", city).set("latitude", latitude).set("mj", mj).save();
+				}else{
+					irradiateModel.set("latitude", latitude).set("mj", mj).update();
 				}
 			}
 			result.put(RESULT, true);
@@ -137,18 +141,33 @@ public class IrradiateController extends BaseController {
 		Map<String, Object> result = getResultMap();
 		try {
 			Integer id = getParaToInt("id");
-			boolean deleteOK = PdfModel.dao.deleteById(id);
+			boolean deleteOK = IrradiateModel.dao.deleteById(id);
 			if (deleteOK) {
 				result.put(RESULT, true);
-				result.put(MESSAGE, "pdf删除成功！");
+				result.put(MESSAGE, "删除成功！");
 			}else{
 				result.put(RESULT, false);
-				result.put(MESSAGE, "pdf删除失败！");
+				result.put(MESSAGE, "删除失败！");
 			}
 		} catch (Exception e) {
-			LOG.debug("pdf删除失败！" + e.getMessage());
+			LOG.debug("日照量删除失败！" + e.getMessage());
 			result.put(RESULT, false);
-			result.put(MESSAGE, "pdf删除失败！");
+			result.put(MESSAGE, "日照量删除失败！");
+		}
+		renderJson(result);
+	}
+	
+	public void update(){
+		Map<String, Object> result = getResultMap();
+		try {
+			IrradiateModel irradiateModel = getModelWithOutModelName(IrradiateModel.class, true);
+			irradiateModel.update();
+			result.put(RESULT, true);
+			result.put(MESSAGE, "更新成功！");
+		} catch (Exception e) {
+			LOG.debug("日照量更新失败！" + e.getMessage());
+			result.put(RESULT, false);
+			result.put(MESSAGE, "日照量版本添加失败！");
 		}
 		renderJson(result);
 	}

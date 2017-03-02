@@ -22,6 +22,10 @@ public class IrradiateModel extends Model<IrradiateModel> {
 		return dao.findFirst("select * from irradiate where province=? and city=? and latitude=? and mj=?", province,city,latitude,mj);
 	}
 	
+	public IrradiateModel getModelByProvinceCity(String province,String city){
+		return dao.findFirst("select * from irradiate where province=? and city=? ", province,city);
+	}
+	
 	
 	public List<Record> getProvinces(){
 		return Db.find("select province from irradiate");
